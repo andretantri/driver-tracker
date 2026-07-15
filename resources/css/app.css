@@ -1,0 +1,12 @@
+/* Tailwind CSS removed to prevent conflict with Bootstrap Sneat template */
+
+html.dark-mode {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+html.dark-mode img,
+html.dark-mode video,
+html.dark-mode .avatar img,
+html.dark-mode .app-brand-logo img {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
