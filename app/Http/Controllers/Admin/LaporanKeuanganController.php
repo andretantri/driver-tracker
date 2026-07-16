@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LaporanKeuanganExport;
 
 class LaporanKeuanganController extends Controller
 {
@@ -158,5 +160,10 @@ class LaporanKeuanganController extends Controller
         ]));
 
         return back()->with('success', 'Laporan keuangan berhasil diperbarui.');
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new LaporanKeuanganExport($request), 'Laporan_Keuangan_SPT_Trans.xlsx');
     }
 }

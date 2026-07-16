@@ -22,9 +22,16 @@ export default function AdminLaporanIndex({ laporan, driverList, filters, summar
         <AuthenticatedLayout>
             <Head title="Laporan Keuangan — SPT Trans" />
 
-            <div className="mb-4">
-                <h4 className="fw-bold mb-0">Laporan Keuangan</h4>
-                <p className="text-muted">Rekap laporan keuangan perjalanan</p>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 className="fw-bold mb-0">Laporan Keuangan</h4>
+                    <p className="text-muted">Rekap laporan keuangan perjalanan</p>
+                </div>
+                <div>
+                    <a href={`/admin/laporan/export?search=${filters.search || ''}&status_verifikasi=${filters.status_verifikasi || ''}&nopol=${filters.nopol || ''}&driver_id=${filters.driver_id || ''}&bulan=${filters.bulan || ''}`} className="btn btn-success" target="_blank" rel="noopener noreferrer">
+                        <i className="bx bx-export me-1"></i> Export Excel
+                    </a>
+                </div>
             </div>
 
             {/* Filter */}

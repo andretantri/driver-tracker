@@ -42,6 +42,7 @@ Route::middleware(['auth', 'role:admin'])
 
         // Laporan Keuangan
         Route::get('/laporan', [\App\Http\Controllers\Admin\LaporanKeuanganController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/export', [\App\Http\Controllers\Admin\LaporanKeuanganController::class, 'export'])->name('laporan.export');
         Route::post('/laporan', [\App\Http\Controllers\Admin\LaporanKeuanganController::class, 'store'])->name('laporan.store');
         Route::put('/laporan/{laporanKeuangan}', [\App\Http\Controllers\Admin\LaporanKeuanganController::class, 'update'])->name('laporan.update');
     });
