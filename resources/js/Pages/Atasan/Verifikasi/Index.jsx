@@ -8,7 +8,7 @@ export default function AtasanVerifikasiIndex({ laporan, driverList, filters }) 
     const [filterNopol, setFilterNopol] = useState(filters.nopol || '');
     const [filterDriver, setFilterDriver] = useState(filters.driver_id || '');
     const [filterBulan, setFilterBulan] = useState(filters.bulan || '');
-    const [filterStatus, setFilterStatus] = useState(filters.status_verifikasi || '');
+    const [filterStatus, setFilterStatus] = useState(filters.status_verifikasi || 'pending');
 
     const applyFilter = (e) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ export default function AtasanVerifikasiIndex({ laporan, driverList, filters }) 
                         <div className="col-md-2">
                             <label className="form-label form-label-sm">Status</label>
                             <select className="form-select form-select-sm" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-                                <option value="">Semua</option>
+                                <option value="all">Semua</option>
                                 <option value="pending">Menunggu</option>
                                 <option value="diverifikasi">Diverifikasi</option>
                                 <option value="ditolak">Ditolak</option>

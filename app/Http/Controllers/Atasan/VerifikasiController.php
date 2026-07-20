@@ -17,14 +17,14 @@ class VerifikasiController extends Controller
     {
         $query = LaporanKeuangan::with(['perintah.kendaraan', 'perintah.driver', 'verifikator']);
 
-        if ($request->status_verifikasi) {
+        if ($request->has('status_verifikasi') && $request->status_verifikasi !== 'all') {
             $query->where('status_verifikasi', $request->status_verifikasi);
-        } else {
+        } elseif (!$request->has('status_verifikasi')) {
             $query->where('status_verifikasi', 'pending'); // default tampil pending
         }
 
         if ($request->nopol) {
-            $query->whereHas('perintah.kendaraan', fn ($q) => $q->where('nopol', $request->nopol));
+            $query->whereHas('perintah.kendaraan', fn ($q) => $q->where('nopol', 'like', '%' . $request->nopol . '%'));
         }
 
         if ($request->driver_id) {
@@ -137,7 +137,7 @@ class VerifikasiController extends Controller
             ->where('status_verifikasi', 'diverifikasi');
 
         if ($request->nopol) {
-            $query->whereHas('perintah.kendaraan', fn ($q) => $q->where('nopol', $request->nopol));
+            $query->whereHas('perintah.kendaraan', fn ($q) => $q->where('nopol', 'like', '%' . $request->nopol . '%'));
         }
         if ($request->driver_id) {
             $query->whereHas('perintah', fn ($q) => $q->where('driver_id', $request->driver_id));
@@ -150,7 +150,8 @@ class VerifikasiController extends Controller
         $laporan = $query->orderBy(
             PerintahPerjalanan::select('tanggal_berangkat')
                 ->whereColumn('perintah_perjalanan.id', 'laporan_keuangan.perintah_perjalanan_id')
-                ->limit(1)
+                ->limit(1),
+            'desc'
         )->paginate(50)->withQueryString();
 
         $rows = $laporan->getCollection()->map(fn ($l) => [
@@ -167,9 +168,9 @@ class VerifikasiController extends Controller
         ]);
 
         // Summary
-        $totalHarga  = $rows->sum('harga');
-        $totalBiaya  = $rows->sum('biaya_transport');
-        $totalOrderan= $rows->sum('orderan');
+        $totalHarga = $query->clone()->join('perintah_perjalanan', 'laporan_keuangan.perintah_perjalanan_id', '=', 'perintah_perjalanan.id')->sum('perintah_perjalanan.harga');
+        $totalBiaya = $query->clone()->sum('total_biaya_transport');
+        $totalOrderan = $totalHarga - $totalBiaya;
 
         $drivers = User::where('level', 3)->orderBy('name')->get(['id', 'name']);
 

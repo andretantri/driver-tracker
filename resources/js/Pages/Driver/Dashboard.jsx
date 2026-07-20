@@ -29,8 +29,10 @@ export default function DriverDashboard({ perintahAktif, riwayat }) {
         Object.entries(laporanForm.data).forEach(([key, val]) => {
             if (key === 'bukti_perjalanan') {
                 for (let f of val) formData.append('bukti_perjalanan[]', f);
-            } else {
-                formData.append(key, val);
+            } else if (key !== 'submit_final') {
+                if (val !== null && val !== undefined) {
+                    formData.append(key, val);
+                }
             }
         });
         if (isFinal) formData.set('submit_final', '1');
