@@ -163,11 +163,11 @@ export default function PerintahDetail({ perintah }) {
                                         </div>
                                         <div className="col-md-4">
                                             <label className="form-label">Odometer Awal (km)</label>
-                                            <input type="number" className="form-control" value={laporanForm.data.odometer_awal} onChange={e => laporanForm.setData('odometer_awal', e.target.value)} />
+                                            <input type="number" className="form-control" value={laporanForm.data.odometer_awal} onChange={e => laporanForm.setData('odometer_awal', e.target.value)} onWheel={(e) => e.target.blur()} />
                                         </div>
                                         <div className="col-md-4">
                                             <label className="form-label">Odometer Akhir (km)</label>
-                                            <input type="number" className="form-control" value={laporanForm.data.odometer_akhir} onChange={e => laporanForm.setData('odometer_akhir', e.target.value)} />
+                                            <input type="number" className="form-control" value={laporanForm.data.odometer_akhir} onChange={e => laporanForm.setData('odometer_akhir', e.target.value)} onWheel={(e) => e.target.blur()} />
                                         </div>
                                         <div className="col-md-4">
                                             <label className="form-label">Total KM</label>

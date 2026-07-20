@@ -169,7 +169,7 @@ class PerintahController extends Controller
         );
 
         if ($request->submit_final) {
-            $perintah->update(['status' => 'berjalan']);
+            $perintah->update(['status' => 'selesai']);
         }
 
         return back()->with('success', $request->submit_final
